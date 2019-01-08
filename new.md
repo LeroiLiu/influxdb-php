@@ -194,7 +194,7 @@ Windows平台由于图形化界面，容易上手，无论是WNMP或者是WAMP�
         }
 
 # 安装laravel Dingo
-添加一些基础文件，便于后期操作。
+添加一些基础文件，便于后期操作。当然也可以参考 [Dingo/Api](https://github.com/dingo/api/wiki)维基。
 
 修改`/home/wwwroot/odin.com/odin/composer.json`
 
@@ -225,3 +225,55 @@ Windows平台由于图形化界面，容易上手，无论是WNMP或者是WAMP�
             "database/factories"
         ]
     },
+
+加载`common.php`、`const.php`、`request.php`
+
+    [root@localhost odin]# composer dump-auto
+
+安装`dingo/api`和`predis/predis`
+
+    [root@localhost odin]# composer update
+
+在`.env`文件中添加以下文本内容：
+
+    API_STANDARDS_TREE=vnd
+    API_SUBTYPE=myapp
+    API_PREFIX=api
+    API_VERSION=v1
+    API_DEFAULT_FORMAT=json
+    API_DEBUG=true
+    API_NAME="api"
+    API_CONDITIONAL_REQUEST=false
+    API_STRICT=false
+
+编辑`/home/wwwroot/odin.com/odin/config/app.php`的`providers`下添加`Dingo\Api\Provider\LaravelServiceProvider::class`
+
+编辑`/home/wwwroot/odin.com/odin/routes/api.php`为：
+
+    use Illuminate\Http\Request;
+    $api = app('Dingo\Api\Routing\Router');
+    $api->version('v1', ['namespace' => 'App\Http\Controllers\Api'], function ($api) {
+        $api->any('/', 'TestController@test');
+    });
+
+编辑`/home/wwwroot/odin.com/odin/app/Http/Controllers/Api/TestController.php`为：
+
+    namespace App\Http\Controllers\api;
+    use Illuminate\Http\Request;
+    use App\Http\Controllers\Controller;
+    use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Redis;
+    use App\Http\Requests\LoRa\Test;
+  
+    class TestController extends Controller
+    {
+    	public function test(){
+    		var_dump("test");
+    	}
+    }
+
+去访问[http://odin.com/api](http://odin.com/api)吧！！！！
+
+**Dingo安装完毕！！！！！**
+
+**基本环境安装完毕.......................................**
