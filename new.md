@@ -194,3 +194,34 @@ Windows平台由于图形化界面，容易上手，无论是WNMP或者是WAMP�
         }
 
 # 安装laravel Dingo
+添加一些基础文件，便于后期操作。
+
+修改`/home/wwwroot/odin.com/odin/composer.json`
+
+在“require”下添加`"dingo/api": "2.0.0-alpha1","predis/predis": "^1.1"`或者复制如下：
+
+    "require": {
+        "php": "^7.1.3",
+        "fideloper/proxy": "^4.0",
+        "laravel/framework": "5.7.*",
+        "laravel/tinker": "^1.0",
+        "dingo/api": "2.0.0-alpha1",
+        "predis/predis": "^1.1"
+    },
+在“autoload”下添加“files”，或者复制如下：
+当然，你需要首先在`app/Helpers`目录下创建`common.php`、`const.php`、`request.php`文件。如果没有`Helpers`目录可以新建。
+
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/Helpers/common.php",
+            "app/Helpers/const.php",
+            "app/Helpers/request.php"
+        ],
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ]
+    },
